@@ -1,0 +1,184 @@
+{
+  "suite": "ultra_fresh",
+  "product": "Velo Base 1.0",
+  "seed": 20260929,
+  "checkpoint": "checkpoints/hybrid",
+  "mode": "calibrated",
+  "label_policy": "Gold labels are ONLY official LocalLLaMA/typed-decisions teacher soft/hard. Transforms mutate presentation only. No hand-invented labels.",
+  "floors": {
+    "must_presentation_ge": 0.6,
+    "stretch_presentation_ge": 0.72,
+    "sealed_clean_ge": 0.752
+  },
+  "gates": {
+    "presentation_all_ge_60": true,
+    "presentation_all_ge_72": false,
+    "sealed_clean_ge_752": true,
+    "overall_must": "PASS"
+  },
+  "baseline": {
+    "n": 2000,
+    "accuracy": 0.753,
+    "soft_accuracy": 0.5574,
+    "ece": 0.1195
+  },
+  "presentation_buckets": [
+    {
+      "bucket": "baseline",
+      "n": 2000,
+      "accuracy": 0.753,
+      "ge_60": true,
+      "ge_72": true
+    },
+    {
+      "bucket": "option_scramble",
+      "n": 2000,
+      "accuracy": 0.753,
+      "ge_60": true,
+      "ge_72": true
+    },
+    {
+      "bucket": "known_synonym_camel",
+      "n": 2000,
+      "accuracy": 0.753,
+      "ge_60": true,
+      "ge_72": true
+    },
+    {
+      "bucket": "casing_all_caps",
+      "n": 2000,
+      "accuracy": 0.739,
+      "ge_60": true,
+      "ge_72": true
+    },
+    {
+      "bucket": "casing_title",
+      "n": 2000,
+      "accuracy": 0.676,
+      "ge_60": true,
+      "ge_72": false
+    },
+    {
+      "bucket": "nested_wrappers",
+      "n": 2000,
+      "accuracy": 0.753,
+      "ge_60": true,
+      "ge_72": true
+    },
+    {
+      "bucket": "numeric_string_formats",
+      "n": 2000,
+      "accuracy": 0.738,
+      "ge_60": true,
+      "ge_72": true
+    },
+    {
+      "bucket": "research_sci_numeric",
+      "n": 2000,
+      "accuracy": 0.743,
+      "ge_60": true,
+      "ge_72": true
+    },
+    {
+      "bucket": "date_time_formats",
+      "n": 2000,
+      "accuracy": 0.7415,
+      "ge_60": true,
+      "ge_72": true
+    },
+    {
+      "bucket": "date_unicode_pad",
+      "n": 2000,
+      "accuracy": 0.7425,
+      "ge_60": true,
+      "ge_72": true
+    },
+    {
+      "bucket": "extra_finance_noise",
+      "n": 2000,
+      "accuracy": 0.7395,
+      "ge_60": true,
+      "ge_72": true
+    },
+    {
+      "bucket": "marketing_cs_padding",
+      "n": 500,
+      "accuracy": 0.646,
+      "ge_60": true,
+      "ge_72": false
+    },
+    {
+      "bucket": "coding_agent_noise",
+      "n": 500,
+      "accuracy": 0.71,
+      "ge_60": true,
+      "ge_72": false
+    },
+    {
+      "bucket": "missing_peripheral",
+      "n": 2000,
+      "accuracy": 0.7495,
+      "ge_60": true,
+      "ge_72": true
+    },
+    {
+      "bucket": "deep_synonym_nest",
+      "n": 2000,
+      "accuracy": 0.753,
+      "ge_60": true,
+      "ge_72": true
+    },
+    {
+      "bucket": "combo_hard",
+      "n": 2000,
+      "accuracy": 0.718,
+      "ge_60": true,
+      "ge_72": false
+    },
+    {
+      "bucket": "combo_ultra",
+      "n": 2000,
+      "accuracy": 0.7125,
+      "ge_60": true,
+      "ge_72": false
+    },
+    {
+      "bucket": "finance_flavored",
+      "n": 1000,
+      "accuracy": 0.767,
+      "ge_60": true,
+      "ge_72": true
+    }
+  ],
+  "alien_buckets": [
+    {
+      "bucket": "alien_keys",
+      "n": 2000,
+      "accuracy": 0.751
+    },
+    {
+      "bucket": "alien_finance_vocab",
+      "n": 1000,
+      "accuracy": 0.789
+    }
+  ],
+  "summary": {
+    "presentation_macro_acc": 0.7314,
+    "alien_macro_acc": 0.77,
+    "presentation_all_ge_60": true,
+    "presentation_all_ge_72": false,
+    "stretch_fail_modes": [
+      "casing_title",
+      "marketing_cs_padding",
+      "coding_agent_noise",
+      "combo_hard",
+      "combo_ultra"
+    ]
+  },
+  "notes": [
+    "No competitor columns in this release artifact.",
+    "Laya and Jev were not re-run on this ultra-fresh suite.",
+    "Inference packaging: prepare_state unwraps wrappers, broader aliases + fuzzy canonicalize; sealed heads unchanged.",
+    "Weights were not refit for packaging/normalize fixes."
+  ]
+}

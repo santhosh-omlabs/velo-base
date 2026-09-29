@@ -1,0 +1,82 @@
+{
+  "name": "velo-base-1.0",
+  "product": "Velo Base 1.0",
+  "default_mode": "calibrated",
+  "test_acc": 0.7535,
+  "overall": {
+    "n": 2000.0,
+    "accuracy": 0.7535,
+    "ece": 0.12001280957141398,
+    "nll": 0.646524227607304,
+    "soft_accuracy": 0.5574312767323356,
+    "brier": 0.0720690562169757,
+    "kl": 0.14208435479117695,
+    "tv": 0.15971888470288184,
+    "score_mae": 0.26486829979786597,
+    "within_1": 0.98625,
+    "within_1_level": 0.98625
+  },
+  "hard_floors": {
+    "accuracy": {
+      "value": 0.7535,
+      "floor": 0.752,
+      "status": "PASS"
+    },
+    "latency_p50_ms": {
+      "value": 31.585265998728573,
+      "floor": 35.0,
+      "status": "PASS"
+    },
+    "size_mb": {
+      "value": 176.9549913406372,
+      "floor": 200.0,
+      "status": "PASS"
+    }
+  },
+  "weights": {
+    "cs": 0.6,
+    "sec": 0.0,
+    "agent": 1.0,
+    "inv": 1.0
+  },
+  "calibration": {
+    "method": "clip_renorm_temperature",
+    "base": "clip_renorm",
+    "T_by_qtype": {
+      "choice": 0.85,
+      "noul": 0.95,
+      "score": 0.85
+    },
+    "fit": "OOS case holdout seed=42 on refreshed-protocol heads; applied to production heads",
+    "note": "Temperature preserves argmax. Primary quality row uses clip_renorm (T=1) for Brier; calibrated T profile for ECE tradeoff.",
+    "modes": {
+      "clip": "clip_renorm, T=1 (Brier-first companion)",
+      "calibrated": "clip_renorm + per-qtype T",
+      "raw_soft_norm": "legacy soft_norm (kept for comparison only)"
+    }
+  },
+  "architecture": {
+    "kind": "classical_specialist",
+    "heads": "HistGradientBoostingRegressor soft heads (~91 slots)",
+    "features": "dict/state features + TF-IDF -> TruncatedSVD(256) + optional CS distill blend",
+    "neural": false,
+    "approx_tree_nodes": 898000,
+    "approx_svd_floats": 7700000,
+    "installed_size_mb": 176.95
+  },
+  "size_mb": 176.9549913406372,
+  "latency_p50_ms": 31.585265998728573,
+  "seal": "artifacts/seal_v1.json",
+  "robustness": {
+    "hardening": "key normalize + choice key sort + flatten/prepare_state + aliases + opaque remapping + date/unicode",
+    "weights_refit": false,
+    "ultra_fresh_suite": "artifacts/robustness_ultra_fresh.json",
+    "presentation_must_bar_ge_60": true,
+    "presentation_stretch_ge_72": false,
+    "alien_macro_acc": 0.77
+  },
+  "dataset": {
+    "name": "LocalLLaMA/typed-decisions",
+    "revision": "ea9306458d6e9563628369a3d1e72e362fb381d2"
+  }
+}

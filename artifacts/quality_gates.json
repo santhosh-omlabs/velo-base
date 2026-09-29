@@ -1,0 +1,49 @@
+{
+  "version": "velo-base-1.0",
+  "hard_floors": {
+    "accuracy": {
+      "value": 0.7535,
+      "floor": 0.752,
+      "status": "PASS"
+    },
+    "latency_p50_ms": {
+      "value": 31.585265998728573,
+      "floor": 35.0,
+      "status": "PASS"
+    },
+    "size_mb": {
+      "value": 176.9549913406372,
+      "floor": 200.0,
+      "status": "PASS"
+    }
+  },
+  "presentation_stress": {
+    "must_all_ge_60": {
+      "status": "PASS",
+      "value": true
+    },
+    "stretch_all_ge_72": {
+      "status": "FAIL",
+      "value": false,
+      "fail_modes": [
+        "casing_title",
+        "marketing_cs_padding",
+        "coding_agent_noise",
+        "combo_hard",
+        "combo_ultra"
+      ]
+    }
+  },
+  "published_context": {
+    "laya_accuracy": 0.766,
+    "jev_1_13_accuracy": 0.727,
+    "velo_as_pct_of_laya": 98.4,
+    "velo_as_pct_of_jev": 103.6,
+    "note": "Laya/Jev accuracy cited from published/known figures. Laya p50 latency (~740 ms) was measured on this eval host; sealed accuracy for Laya/Jev was not re-run on the ultra-fresh robustness suite."
+  },
+  "brier": {
+    "calibrated": 0.072,
+    "clip_best": 0.069,
+    "note": "Brier is the weakest relative soft metric vs published specialist figures; reported honestly."
+  }
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Velo Base 1.0 — Benchmarks</title>
+<style>
+  :root { --bg:#0b0f14; --card:#121821; --text:#e7eef7; --muted:#9aa7b8; --accent:#5b9cff; --ok:#3ecf8e; --warn:#f0b429; --line:#1e2936; }
+  body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+         background: var(--bg); color: var(--text); line-height:1.55; }
+  main { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+  h1 { font-size: 1.85rem; margin: 0 0 0.35rem; letter-spacing: -0.02em; }
+  h2 { font-size: 1.25rem; margin-top: 2.2rem; border-bottom: 1px solid var(--line); padding-bottom: 0.4rem; }
+  .sub { color: var(--muted); margin-bottom: 1.5rem; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 1.1rem 1.2rem; margin: 1rem 0; }
+  table { width:100%; border-collapse: collapse; font-size: 0.95rem; }
+  th, td { text-align: left; padding: 0.55rem 0.6rem; border-bottom: 1px solid var(--line); }
+  th { color: var(--muted); font-weight: 600; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .tag { display:inline-block; font-size:0.75rem; padding:0.15rem 0.5rem; border-radius:999px; border:1px solid var(--line); color:var(--muted); margin-right:0.35rem; }
+  .pass { color: #3ecf8e; font-weight:600; }
+  .fail { color: #f0b429; font-weight:600; }
+  a { color: #7db7ff; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.9em; }
+  .note { color: var(--muted); font-size: 0.92rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Velo Base 1.0</h1>
+  <p class="sub">Sealed typed-decision specialist · Apache-2.0 · classical HGBR + SVD stack · ~177&nbsp;MB · ~32&nbsp;ms p50</p>
+  <div class="card">
+    <span class="tag">accuracy 0.7535</span>
+    <span class="tag">~98.4% of Laya acc</span>
+    <span class="tag">~103.6% of Jev 1.13 acc</span>
+    <span class="tag">presentation ≥60% PASS</span>
+    <span class="tag">stretch ≥72% FAIL (documented)</span>
+  </div>
+
+  <h2>A. Sealed metrics (ours)</h2>
+  <p class="note">Official test: 400 cases / 2,000 decisions on <code>LocalLLaMA/typed-decisions</code> revision <code>ea9306458d6e9563628369a3d1e72e362fb381d2</code>. Soft/Brier/KL/TV on choice+noul only.</p>
+  <table>
+    <thead><tr><th>Metric</th><th class="num">Calibrated</th><th class="num">Clip</th></tr></thead>
+    <tbody>
+      <tr><td>Accuracy</td><td class="num"><strong>0.7535</strong></td><td class="num">0.7535</td></tr>
+      <tr><td>Soft accuracy</td><td class="num">~0.557</td><td class="num">~0.547</td></tr>
+      <tr><td>Brier</td><td class="num">~0.072</td><td class="num">~0.069</td></tr>
+      <tr><td>ECE</td><td class="num">~0.120</td><td class="num">~0.148</td></tr>
+      <tr><td>NLL</td><td class="num">~0.647</td><td class="num">~0.675</td></tr>
+      <tr><td>Score MAE</td><td class="num">~0.265</td><td class="num">~0.268</td></tr>
+      <tr><td>Top-50% selective</td><td class="num">0.894</td><td class="num">—</td></tr>
+      <tr><td>p50 ms / 5-decision case</td><td class="num"><strong>~32</strong></td><td class="num">~32</td></tr>
+      <tr><td>Package size</td><td class="num"><strong>~177 MB</strong></td><td class="num">~177 MB</td></tr>
+    </tbody>
+  </table>
+  <p class="note">Hard floors: accuracy ≥ 0.752 · p50 ≤ 35 ms · size ≤ 200 MB — all <span class="pass">PASS</span>.</p>
+
+  <h2>B. Published accuracy context</h2>
+  <p class="note">Laya / Jev accuracies are published or previously known figures. They were <strong>not</strong> re-run on Velo’s ultra-fresh robustness suite. Laya latency below was measured on the same eval host as Velo.</p>
+  <table>
+    <thead><tr><th>System</th><th class="num">Accuracy</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Velo Base 1.0</td><td class="num"><strong>0.7535</strong></td><td>Sealed here</td></tr>
+      <tr><td>Laya</td><td class="num">~0.766</td><td>Published; Velo ≈ 98.4%. Same-host p50 ≈ 740 ms</td></tr>
+      <tr><td>TypeSafe Jev 1.13</td><td class="num">~0.727</td><td>Published generalist; Velo ≈ 103.6%</td></tr>
+    </tbody>
+  </table>
+
+  <h2>C. Presentation / alien stress (Velo-only)</h2>
+  <table>
+    <thead><tr><th>Gate</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>Presentation all ≥ 60% (must)</td><td class="pass">PASS</td></tr>
+      <tr><td>Presentation all ≥ 72% (stretch)</td><td class="fail">FAIL</td></tr>
+      <tr><td>Alien macro accuracy</td><td>~0.770</td></tr>
+      <tr><td>Sealed clean ≥ 0.752</td><td class="pass">PASS</td></tr>
+    </tbody>
+  </table>
+  <p class="note">Stretch fail modes: Title-Case, CS shoutcase padding, coding-agent noise, combo_hard, combo_ultra (all still ≥60%). Full bucket table in <a href="../docs/ROBUSTNESS.md">docs/ROBUSTNESS.md</a>.</p>
+
+  <h2>Positioning</h2>
+  <div class="card note">
+    Extreme-efficiency typed-decision specialist: classical stack, CPU-tens-of-ms, ≤200&nbsp;MB, retaining ~98% of Laya-class sealed accuracy, shipped as a <strong>refittable base</strong> for vertical schemas. Not a general LLM foundation; not a claim of new decision theory.
+  </div>
+  <p class="note">Source: <code>artifacts/seal_v1.json</code> · Author: Santhosh Reddy · License: Apache-2.0</p>
+</main>
+</body>
+</html>

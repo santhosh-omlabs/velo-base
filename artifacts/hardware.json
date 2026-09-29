@@ -1,0 +1,6 @@
+{
+  "cpu_model": "Intel(R) Xeon(R) Processor",
+  "cpus": 8,
+  "platform": "Linux-6.12.94+-x86_64-with-glibc2.41",
+  "threads_used": 8
+}

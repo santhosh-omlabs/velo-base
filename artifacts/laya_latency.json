@@ -1,0 +1,19 @@
+{
+  "accuracy_source": "published",
+  "accuracy": 0.766,
+  "soft_accuracy": 0.471,
+  "brier": 0.061,
+  "ece": 0.213,
+  "score_mae": 0.242,
+  "threads": 8,
+  "note": "Accuracy from Laya BENCHMARKS.md (laya-typed-decisions). Latency measured here if load succeeds.",
+  "load_s": 11.3,
+  "laya_version": "0.3.21",
+  "latency": {
+    "n_cases": 30,
+    "p50_ms_per_case": 739.6748730006948,
+    "p95_ms_per_case": 823.3844872991539,
+    "mean_ms_per_case": 763.5348143332521,
+    "protocol": "warm single-case predict, 5 questions/case typical"
+  }
+}
